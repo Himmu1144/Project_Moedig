@@ -1,0 +1,287 @@
+{% extends 'web_moedig/layout.html' %}
+{% block css %}
+{% load static %}
+{% static 'web_moedig/css/styleForOrder.css' %}
+{% endblock css %}
+{% block orderActive %}active{% endblock orderActive %}
+{% block body %}
+{% load static %}
+
+<style>
+  .main {
+    margin-top: 4em;
+  }
+
+  .order-conatiner {
+    border-radius: 8px;
+    margin-bottom: 4em;
+  }
+
+  .order-conatiner-end {
+    border-radius: 8px;
+    /* margin-bottom: 4em; */
+  }
+</style>
+
+<div class="container main">
+  <div class="container py-4">
+
+    {% for order in orders %}
+    {% if forloop.last %}
+    <div class="p-5 bg-light rounded-3 order-conatiner-end">
+      {% else %}
+      <div class="p-5 bg-light rounded-3 order-conatiner">
+        {% endif %}
+        
+          <h4>Order Id : {{order.order_id}}</h4>
+          <hr>
+        
+
+              <div style="width:52vw;">
+                {% for item in order.load_json %}
+                <div class="my-3">
+                  {% for key,value in item.items %}
+                  <span>{{key|capfirst}} : {{value}} &nbsp;</span>
+                  {% endfor %}
+                </div>
+                {% endfor %}
+              </div>
+            
+
+              {% comment %} <a class="btn btn-primary" data-bs-toggle="collapse" href="#details" role="button" aria-expanded="false" aria-controls="details">
+                Link with href
+              </a> {% endcomment %}
+              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#details" aria-expanded="false" aria-controls="details">
+                Button with data-target
+              </button>
+
+              <div class="collapse" id="details">
+                <div class="card card-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+              </div>
+
+              
+         
+
+
+        <div class="m-2">
+
+
+          <div class="w-50">
+            <hr>
+          </div>
+          <div class="orderDetailsOnOrder" style="display: flex;">
+            <div class="customerDetailsOnOrder">
+              <p><b>Name :</b> {{order.user.first_name}}</p>
+              <p><b>Email :</b> {{order.user.email}}</p>
+              <p><b>Phone Number :</b> {{order.phone}}</p>
+            </div>
+            <div class="pickupDetailsOnOrder" style="margin-left:38%;">
+              <p><b>Your order will be delivered at Galgotias University</b></p>
+              <p><b>Delivery Date:</b> {{order.delivery}}</p>
+              <p><b>Pickup Time :</b> {{order.tslot}}</p>
+
+            </div>
+          </div>
+          <hr>
+          <div style="display: flex;">
+            <div>
+              <p>Order Placed At : {{order.order_date}}</p>
+              <p><strong>Total Bill : &#x20B9; {{order.bill}}</strong></p>
+            </div>
+            <div style="margin-left: 47.2%;">
+              <p>{% if order.payment_status %}
+                <b>Payment Status :</b> Paid
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
+            {% if order.delivery_status == 'Order Placed' %}
+            <li class="step0 active text-center" id="step1"></li>
+            <li class="step0  text-center" id="step2"></li>
+            <li class="step0  text-center" id="step3"></li>
+            <li class="step0  text-center" id="step4"></li>
+            {% endif %}
+
+            {% if order.delivery_status == 'Order Printed' %}
+            <li class="step0 active text-center" id="step1"></li>
+            <li class="step0 active text-center" id="step2"></li>
+            <li class="step0  text-center" id="step3"></li>
+            <li class="step0  text-center" id="step4"></li>
+            {% endif %}
+
+            {% if order.delivery_status == 'Order Shipped' %}
+            <li class="step0 active text-center" id="step1"></li>
+            <li class="step0 active text-center" id="step2"></li>
+            <li class="step0 active text-center" id="step3"></li>
+            <li class="step0 text-center" id="step4"></li>
+            {% endif %}
+
+            {% if order.delivery_status == 'Delivered' %}
+            <li class="step0 active text-center" id="step1"></li>
+            <li class="step0 active text-center" id="step2"></li>
+            <li class="step0 active text-center" id="step3"></li>
+            <li class="step0 active text-center" id="step4"></li>
+            {% endif %}
+
+          </ul>
+
+          <div class="d-flex justify-content-between">
+            <div class="d-lg-flex align-items-center">
+              <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+              <div>
+                <p class="fw-bold mb-0">Placed</p>
+              </div>
+            </div>
+            <div class="d-lg-flex align-items-center">
+              <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+              <div>
+                <p class="fw-bold mb-0">Printed</p>
+              </div>
+            </div>
+            <div class="d-lg-flex align-items-center">
+              <i class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+              <div>
+                <p class="fw-bold mb-0">In Route</p>
+              </div>
+            </div>
+            <div class="d-lg-flex align-items-center">
+              <i class="fas fa-home fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+              <div>
+                <p class="fw-bold mb-0">Delivered</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <!-- 
+<br>
+<section class="m-4">
+  {% for order in orders %}
+  <div class="container  py-5 vh-100">
+    <div class="container"
+      style="background-color:transparent; border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,.5);">
+      &nbsp;
+      {% comment %} <h4>{{request.user.first_name}}</h4>
+      <h5>{{request.user.email}}</h5> {% endcomment %}
+      <h4>Order Id : {{order.order_id}}</h4>
+      <hr>
+      <div class="m-2">
+        <div style="width:52vw;">
+          {% for item in order.load_json %}
+          <div class="my-2">
+
+            {% for key,value in item.items %}
+            <span>{{key|capfirst}} : {{value}} &nbsp;</span>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+
+        {% comment %} <p>Phone Number: {{order.phone}}</p> {% endcomment %}
+
+        <p><strong>Bill : {{order.bill}}</strong></p>
+        <p>Delivery Date: {{order.delivery}}</p>
+        <p>Pickup Time : {{order.tslot}}</p>
+        <p>{% if order.payment_status %}
+          Payment Status : Paid
+          {% endif %}</p>
+      </div>
+
+      <div class="card-body p-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-5">
+          {% comment %}
+          <div>
+            <h5 class="mb-0">INVOICE <span class="text-primary font-weight-bold">#Y34XDHR</span></h5>
+            <ul>
+              <li class="downloadInvoice"><a href="index.html">Download Invoice</a></li>
+            </ul>
+          </div> {% endcomment %}
+          <div class="text-end">
+            <p class="mb-0">Expected Arrival <span>{{order.delivery}}</span></p>
+
+          </div>
+        </div>
+
+        <ul id="progressbar-2" class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
+          {% if order.delivery_status == 'Order Placed' %}
+          <li class="step0 active text-center" id="step1"></li>
+          <li class="step0  text-center" id="step2"></li>
+          <li class="step0  text-center" id="step3"></li>
+          <li class="step0  text-center" id="step4"></li>
+          {% endif %}
+
+          {% if order.delivery_status == 'Order Printed' %}
+          <li class="step0 active text-center" id="step1"></li>
+          <li class="step0 active text-center" id="step2"></li>
+          <li class="step0  text-center" id="step3"></li>
+          <li class="step0  text-center" id="step4"></li>
+          {% endif %}
+
+          {% if order.delivery_status == 'Order Shipped' %}
+          <li class="step0 active text-center" id="step1"></li>
+          <li class="step0 active text-center" id="step2"></li>
+          <li class="step0 active text-center" id="step3"></li>
+          <li class="step0 text-center" id="step4"></li>
+          {% endif %}
+
+          {% if order.delivery_status == 'Order Picked' %}
+          <li class="step0 active text-center" id="step1"></li>
+          <li class="step0 active text-center" id="step2"></li>
+          <li class="step0 active text-center" id="step3"></li>
+          <li class="step0 active text-center" id="step4"></li>
+          {% endif %}
+
+        </ul>
+
+        <div class="d-flex justify-content-between">
+          <div class="d-lg-flex align-items-center">
+            <i class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+            <div>
+              <p class="fw-bold mb-1">Order</p>
+              <p class="fw-bold mb-0">Placed</p>
+            </div>
+          </div>
+          <div class="d-lg-flex align-items-center">
+            <i class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+            <div>
+              <p class="fw-bold mb-1">Order</p>
+              <p class="fw-bold mb-0">Printed</p>
+            </div>
+          </div>
+          <div class="d-lg-flex align-items-center">
+            <i class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+            <div>
+              <p class="fw-bold mb-1">Order</p>
+              <p class="fw-bold mb-0">Shipped</p>
+            </div>
+          </div>
+          <div class="d-lg-flex align-items-center">
+            <i class="fas fa-home fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+            <div>
+              <p class="fw-bold mb-1">Order</p>
+              <p class="fw-bold mb-0">Picked</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section> -->
+<hr class="my-5">
+  {% endblock body %}

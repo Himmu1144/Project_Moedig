@@ -1,0 +1,55 @@
+{% extends 'web_moedig/layout.html' %}
+{% block body %}
+<style>
+  a:hover{
+    color: white !important;;
+  }
+</style>
+    {% if order_id %}
+    
+    <div class="container">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container py-5">
+        <p class="col-md-8 fs-4"><h2>Your Order was successfully placed - </h2></p>
+        <p>Order Id : {{order_id}}</p>
+        <span>To know More You Can Go To :</span><a href="{% url 'order' %}" class="btn btn-sm" type="button">My Orders</a>
+      </div>
+    </div>
+  </div>
+    {% endif %}
+    {% if b %}
+    <h2>Transaction Failed - {{b}}</h2>
+    {% endif %}
+    <hr class="my-5">
+{% endblock body %}
+
+{% block js %}
+
+
+
+  <script>
+    var options = {
+        
+        "handler": function (response){
+            alert(response.razorpay_payment_id);
+            alert(response.razorpay_order_id);
+            alert(response.razorpay_signature)
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response){
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+    });
+    
+  </script>
+
+
+{% endblock js %}
+
+

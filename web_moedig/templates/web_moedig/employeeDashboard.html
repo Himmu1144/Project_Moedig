@@ -1,0 +1,135 @@
+{% extends 'web_moedig/layout.html' %}
+{% block css %}
+{% load static %}
+{% static 'web_moedig/css/styleForEmployee.css' %}
+{% endblock css %}
+{% block body %}
+{% load static %}
+<br>
+      {% for employee in employees %}
+      <body>
+        <div class="wrapperForAdmin">
+          <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+              <tr class="columnName">
+                <th>Order ID</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                <!-- Loop Starts Here -->
+              <tr>
+               
+                <td>
+                  <p>{{employee.order_id}}</p>
+                </td>
+               
+                <td>
+                  <div class="buttonOverlay"><a class="button" href="/employeeDashboard/{{employee.order_id}}">View</a></div>
+                </td>
+              </tr>
+  <!-- Loop Ends Here -->
+            </tbody>
+          </table>
+
+        </div>
+        {% endfor %}
+        <!-- Popup View -->
+{% comment %} 
+        <!-- Button trigger modal -->
+        <div id="popup1" class="overlay">
+        	<div class="popup">
+        		<h2>John Doe</h2>
+        		<a class="close" href="#">&times;</a>
+          <hr class="my-3">
+        		<div class="orderDetailsOnPopup">
+              <!-- Row Loop Start Here -->
+              <li class="row">
+                <div class="contentOnView">
+                  <i class="fas fa-file-alt"></i>
+                  <div class="details">
+                    <span class="fileName">image_01.png</span>
+                  </div>
+                </div>
+                <button class="downloadButton"><i class="fa fa-download"></i> Download</button>
+                <form class="form1">
+                  <select name="No of Coipes">
+                    <option value="1">1 copy</option>
+                    <option value="2">2 Copies</option>
+                    <option value="3">3 Copies</option>
+                    <option value="4">4 Copies</option>
+                    <option value="5">5 Copies</option>
+                    <option value="6">6 Copies</option>
+                    <option value="7">7 Copies</option>
+                    <option value="8">8 Copies</option>
+                    <option value="9">9 Copies</option>
+                    <option value="10">10 Copies</option>
+                  </select>
+                </form>
+                <div class="form2">
+                  <form class="form" >
+                    <select name="Paper Size">
+                      <option value="A4">A4</option>
+                      <option value="A3">A3</option>
+                      <option value="letter">letter</option>
+                      <option value="Envelope">Envelope</option>
+                    </select>
+                    <select name="Paper Type">
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                    </select>
+                    <select name="Color">
+                    <option value="Black&White">Black & White</option>
+                    <option value="Color">Color</option>
+                  </select>
+                  <br>
+                    <select name="Paper Quality">
+                      <option value="Paper Quality">75gsm</option>
+                      <option value="80gsm">80gsm</option>
+                      <option value="100gsm">100gsm</option>
+                      <option value="120gsm">120gsm</option>
+                    </select>
+                    <select name="Sides">
+                      <option value="Right Side Printing">Right Side Printing</option>
+                      <option value="Both Side Printing">Both Side Printing</option>
+                    </select>
+                    <select name="Print Quality">
+                      <option value="300 dpi">300 dpi</option>
+                      <option value="600 dpi">600 dpi</option>
+                      <option value="1200 dpi">1200 dpi</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="rowPrice"><p><b>179 SEK</b></p></div>
+              </li>
+<!-- Row Loop Ends Here -->
+
+            <hr class="my-3">
+            </div>
+              <hr class="my-3">
+              <div class="updateStatus">
+                <div class="updateMain">
+                  <form>
+                  <select class="statusUpdate" name="No of Coipes">
+                    <option value="1">Order Processed</option>
+                    <option value="2">Order Shipped</option>
+                    <option value="3">Order En Route</option>
+                    <option value="4" disabled>Delivered</option>
+                  </select>
+                </form></div>
+                <div>
+                  <button type="button" class="updateButton">Update</button>
+                </div>
+
+
+            </div>
+        	</div>
+        </div> {% endcomment %}
+         <!-- Popup view ends Here -->
+        
+         <!-- Popup Update Price ends Here -->
+         <hr class="my-5">
+        <!-- FooterSection -->
+{% endblock body %}

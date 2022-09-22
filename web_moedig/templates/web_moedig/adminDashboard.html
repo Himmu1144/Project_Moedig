@@ -1,0 +1,281 @@
+{% extends 'web_moedig/layout.html' %}
+{% block css %}
+{% load static %}
+{% static 'web_moedig/css/styleForAdminDashboard.css' %}
+{% endblock css %}
+{% block aboutActive %}active{% endblock aboutActive %}
+{% block body %}
+{% load static %}
+<section>
+  <br>
+  <div class="wrapperForAdmin">
+    <table class="table align-middle mb-0 bg-white">
+      <thead class="bg-light">
+        <tr class="columnName">
+          <th>Customer Name</th>
+          <th>Customer Email</th>
+          <th>Customer Mobile No</th>
+          <th>Order ID</th>
+          <th>Payment Status</th>
+          <th>Order Status</th>
+          <th>Forward To</th>
+          <th>Actions</th>
+          {% comment %} <th>Forward</th>
+          <th>Forwarded To</th> {% endcomment %}
+        </tr>
+      </thead>
+      {% for order in orders %}
+            <tbody>
+                <!-- Loop Starts Here -->
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="ms-3">
+                      <p class="fw-bold mb-1">{{order.user.first_name}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p class="fw-normal mb-1">{{order.user.email}}</p>
+                </td>
+                <td>
+                  <p>{{order.phone}}</p>
+                </td>
+                <td>
+                  <p>{{order.order_id}}</p>
+                </td>
+                <td>
+                  <span class="badge badge-success rounded-pill d-inline">{% if order.payment_status %}Paid{% endif %}</span>
+                </td>
+                <td>{{order.delivery_status}}</td>
+                <td>
+                  <form action="/employee/" method='post'>
+                    {% csrf_token %}
+                  <select name="employee" id="employee">
+                    {% for items in enames %}
+                    <option value="{{items}}">{{items}}</option>
+                    {% endfor %}
+                  </select>
+                  <input type="hidden" value="{{order.order_id}}" name="id_order">
+                  <button class='btn btn-sm' type='submit'>Send</button>
+                </form>
+                </td>
+                <td>
+                  <div class="buttonOverlay"><a class="button" href="/adminDashboard/{{order.order_id}}">View</a></div>
+                </td>
+                {% comment %} <td>
+                  <div class="forwardButton">
+                    <select name="Select Name">
+                      <option value="1">Mohan Stationary</option>
+                      <option value="2">Printing Press Chandauli</option>
+                    </select>
+                    <button type="button" class="updateButton">Send</button>
+                  </div>
+                </td>
+                <td><a><b>Mohan Stationary</b></a></td>
+              </tr> {% endcomment %}
+              <!-- Loop Ends Here -->
+            </tbody>
+            {% endfor %}
+          </table>
+
+        </div>
+
+        <!-- Popup View -->
+
+        <!-- Button trigger modal -->
+        <div id="popup1" class="overlay">
+        	<div class="popup">
+        		<h2>John Doe</h2>
+        		<a class="close" href="#">&times;</a>
+          <hr class="my-3">
+        		<div class="orderDetailsOnPopup">
+              <!-- Row Loop Start Here -->
+              <li class="row">
+                <div class="contentOnView">
+                  <i class="fas fa-file-alt"></i>
+                  <div class="details">
+                    <span class="fileName">image_01.png</span>
+                  </div>
+                </div>
+               
+                <button class="downloadButton"><i class="fa fa-download"></i> Download</button>
+                 <!-- checkbox  Start-->
+                 <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." />
+                 <!-- checkbox end-->
+                <form class="form1">
+                  <select name="No of Coipes">
+                    <option value="1">1 copy</option>
+                    <option value="2">2 Copies</option>
+                    <option value="3">3 Copies</option>
+                    <option value="4">4 Copies</option>
+                    <option value="5">5 Copies</option>
+                    <option value="6">6 Copies</option>
+                    <option value="7">7 Copies</option>
+                    <option value="8">8 Copies</option>
+                    <option value="9">9 Copies</option>
+                    <option value="10">10 Copies</option>
+                  </select>
+                </form>
+                <div class="form2">
+                  <form class="form" >
+                    <select name="Paper Size">
+                      <option value="A4">A4</option>
+                      <option value="A3">A3</option>
+                      <option value="letter">letter</option>
+                      <option value="Envelope">Envelope</option>
+                    </select>
+                    <select name="Paper Type">
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                    </select>
+                    <select name="Color">
+                    <option value="Black&White">Black & White</option>
+                    <option value="Color">Color</option>
+                  </select>
+                  <br>
+                    <select name="Paper Quality">
+                      <option value="Paper Quality">75gsm</option>
+                      <option value="80gsm">80gsm</option>
+                      <option value="100gsm">100gsm</option>
+                      <option value="120gsm">120gsm</option>
+                    </select>
+                    <select name="Sides">
+                      <option value="Right Side Printing">Right Side Printing</option>
+                      <option value="Both Side Printing">Both Side Printing</option>
+                    </select>
+                    <select name="Print Quality">
+                      <option value="300 dpi">300 dpi</option>
+                      <option value="600 dpi">600 dpi</option>
+                      <option value="1200 dpi">1200 dpi</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="rowPrice"><p><b>179 SEK</b></p></div>
+              </li>
+<!-- Row Loop Ends Here -->
+
+            <hr class="my-3">
+            </div>
+              <hr class="my-3">
+              <div class="updateStatus">
+                <div class="updateMain">
+                  </div>
+                <div>
+                  <button type="button" class="updateButton">Update</button>
+                </div>
+
+
+            </div>
+        	</div>
+        </div>
+         <!-- Popup view ends Here -->
+         <!-- Popup Update Price Start Here -->
+         <div id="popup2" class="overlay">
+        	<div class="popup">
+        		<h2>Calculation Chart</h2>
+        		<a class="close" href="#">&times;</a>
+          <!-- content start here-->
+            <table class="table align-middle mb-0 bg-white">
+              <thead class="bg-light">
+                <tr>
+                  <th>Type</th>
+                  <th>Current Cost</th>
+                  <th>Current Price</th>
+                  <th>Update Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <!-- Loop Starts Here -->
+                <tr>
+                  <td>
+                    <select name="Paper Size">
+                      <option value="A4">A4</option>
+                      <option value="A3">A3</option>
+                      <option value="letter">letter</option>
+                      <option value="Envelope">Envelope</option>
+                    </select>
+                  </td>
+                  <td><input type="number"class="form-control" /></td>
+                  <td><input type="number"class="form-control" /></td>
+                  <td><input type="number"class="form-control" /></td>
+                </tr>
+                <hr class="my-3">
+                <tr>
+                  <td>
+                    <select name="Paper Type">
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                      <option value="Pulp Paper">Pulp Paper</option>
+                    </select>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                  </td>                  
+                </tr>
+                <tr>
+                  <td>
+                    <select name="Color">
+                      <option value="Black&White">Black & White</option>
+                      <option value="Color">Color</option>
+                    </select>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <select name="Paper Quality">
+                      <option value="Paper Quality">75gsm</option>
+                      <option value="80gsm">80gsm</option>
+                      <option value="100gsm">100gsm</option>
+                      <option value="120gsm">120gsm</option>
+                    </select>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                  </td>
+                </tr>
+                <tr>
+                  <td><select name="Sides">
+                    <option value="Right Side Printing">Right Side Printing</option>
+                    <option value="Both Side Printing">Both Side Printing</option>
+                  </select>         
+                  <td><input type="number"class="form-control" /></td>
+                  <td><input type="number"class="form-control" /></td>
+                  <td><input type="number"class="form-control" /></td>        
+                </td>
+                </tr>
+                <tr>
+                  <td>
+                    <select name="Print Quality">
+                      <option value="300 dpi">300 dpi</option>
+                      <option value="600 dpi">600 dpi</option>
+                      <option value="1200 dpi">1200 dpi</option>
+                    </select>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                    <td><input type="number"class="form-control" /></td>
+                  </td>
+                </tr>
+                <tr>
+                  <td><a><b>Total</b></a></td>
+                  <td><a><b>1</b></a></td>
+                  <td><a><b>1.2</b></a></td>
+                  <td><a><b>1.3</b></a></td>
+                </tr>
+    <!-- Loop Ends Here -->
+              </tbody>
+            </table>
+            <div><button type="button" class="updateButton">Update</button></div>
+        	</div>
+        </div>
+         <!-- Popup Update Price ends Here -->
+         <hr class="my-5">
+{% endblock body %}
+</section>
+   

@@ -1,0 +1,387 @@
+body{
+  background-color: 6#b9b8ee;
+  font-family: 'Roboto', sans-serif;
+  /* font-family: sans-serif; */
+}
+
+.navDownImage img{
+   height: 100%;
+   width: 98%;
+   margin-left: 1%;
+   opacity: 0.4;
+}
+/*header*/
+.header{
+  height: 80px;
+  width: 100%;
+  padding: 14px 30px;
+  background-color: #256D85;
+  position: fixed;
+  z-index: 999;
+
+}
+.header .nav-header{
+  display: inline;
+}
+.header .nav-header .nav-logo{
+  display: inline-block;
+  margin-top: -24px;
+}
+.header .nav-links{
+  display: inline;
+  float: right;
+  font-size: 18px;
+  margin-top: 12px;
+
+}
+ 
+.header .nav-links .loginBtn{
+  display: inline-block;
+  padding: 5px 15px;
+  margin-left: 20px;
+  font-size: 17px;
+  color: #71C9CE;
+}
+.header .nav-links a{
+  padding: 10px 12px;
+  text-decoration: none;
+  font-weight: 550;
+  color: white;
+  border-radius: 3px;
+}
+/* Hover effects */
+.header .nav-links a:hover{
+  background-color: #002B5B;
+}
+ 
+/* responsive navbar toggle button */
+.header #nav-check, .header .nav-btn{
+  display: none;
+}
+
+
+ 
+@media (max-width:700px) {
+  .header .nav-btn{
+    display: inline-block;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 999;
+  }
+  .header .nav-btn label {
+    display: inline-block;
+    width: 80px;
+    height: 70px;
+    padding: 25px;
+  }
+  .header .nav-btn label span {
+    display: block;
+    height: 10px;
+    width: 25px;
+    border-top: 3px solid #eee;
+  }
+  .header .nav-btn label:hover, .header #nav-check:checked ~ .nav-btn label {
+    background-color: #71C9CE;
+  }
+  .header .nav-links{
+    position: absolute;
+    display: block;
+    text-align: center;
+    width: 50%;
+    background-color: #71C9CE;
+    transition: all 0.3s ease-in;
+    overflow-y: hidden;
+    top: 70px;
+    right: 0px;
+  }
+  .header .nav-links a {
+    display: block;
+  }
+ 
+  /* when nav toggle button not checked */
+  .header #nav-check:not(:checked) ~ .nav-links {
+    height: 0px;
+  }
+ 
+  /* when nav toggle button is checked */
+  .header #nav-check:checked ~ .nav-links {
+    height: calc(60vh - 50px);
+    overflow-y: auto;
+  }
+  .header .nav-links .loginBtn {
+    padding: 10px 40px ;
+    margin: 20px;
+    font-size:  18px;
+    font-weight: bold;
+    color: #71C9CE;
+  }
+   
+ 
+}
+
+/* Order Page*/
+
+/* Upload Section */
+.uploadYourFileHeading{
+  text-align: center;
+  font-size: 40px;
+}
+
+section .row{
+  margin-bottom: 1%;
+  background: transparent;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 5px 20px rgba(0,0,0,.1);
+}
+
+.uploaded-area{
+  max-height: 25%;
+  max-width: 85%;
+  margin-left: 3.3%;
+  overflow-y: hidden;
+  border-radius: 5px;
+  box-shadow: 10%;
+}
+.uploaded-area.onprogress{
+  max-height: 150px;
+}
+.uploaded-area::-webkit-scrollbar{
+  width: 0px;
+}
+.uploaded-area .row .content{
+  display: flex;
+  align-items: center;
+}
+.uploaded-area .row .details{
+  display: flex;
+  margin-left: 15px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.uploaded-area .row .details .size{
+  color: #404040;
+  font-size: 11px;
+}
+.uploaded-area i.fa-check{
+  font-size: 16px;
+}
+/* Delete Button */
+.deleteMe{
+  color: Black;
+  font-weight: bold;
+  margin-right: 10px;
+  box-shadow: 7px 7px 12px rgba(0,0,0,0.05);
+  background-color: #8ED9F9;
+  border-radius: 10%;
+  cursor: pointer;
+  border: 2.5px solid transparent;
+  transition: 1s ease;
+}
+.deleteMe:hover{
+    background-color: #EC5E26;
+    color: #fff;
+}
+.formContainer{
+  background-color: #8ED9F9;
+}
+section div .form1{
+  position: relative;
+  display: inline-block;
+  height: 5%;
+  width: auto;
+  align-self: auto;
+  background-size: 10px;
+  float: none;
+  border: transparent;
+  border-radius: 5px;
+}
+section div .form2{
+  position: relative;
+  display: inline-block;
+  height: 5%;
+  width: auto;
+  background-size: 10px;
+  float: none;
+  border: transparent;
+}
+section div form select{
+  border-radius: 5px;
+  cursor: pointer;
+  border: rebeccapurple;
+  background-color: transparent;
+  color: black;
+}
+
+
+
+/* reasons*/
+.reasons{
+  margin-left: 8%;
+}
+
+/* Section 2 How do we Process*/
+
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+  .howDoWeProceed {
+    flex-direction: column;
+  }
+}
+.howDoWeProcess {
+  width:350px;
+   display:inline-block;
+    margin-left:50px;
+    margin-top:50px
+    
+  }
+  
+  
+  .howDoWeProcess .card {
+    
+    position:relative;
+    overflow:hidden;
+    width:350px;
+    margin:0 auto;
+    background:#8ED9F9;
+    padding:20px;
+    box-sizing:border-box;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.1)
+  }
+  .howDoWeProcess .card .layer {
+    z-index:1;
+    position:absolute;
+    top:calc(100% - 2px);
+    height:100%;
+    width:100%;
+    left:0;
+    background:#256D85;
+    transition:0.5s;
+    
+  }
+  
+  .howDoWeProcess .card .content {
+    z-index:2; 
+    position:relative;
+  }
+  
+  .howDoWeProcess .card:hover  .layer{
+    top:0;
+  }
+  
+  .howDoWeProcess .card .content p {
+    font-size:14px;
+    line-height:24px;
+    color: #002B5B;
+    
+  }
+  .howDoWeProcess .card .content:hover p {
+    font-size:14px;
+    line-height:24px;
+    color:whitesmoke;
+    
+  }
+  .howDoWeProcess .card .content .image {
+    width:100px; height:100px;
+    margin:0 auto;
+    border-radius:50%;
+    overflow:hidden;
+    border: 4px solid white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    
+  }
+  
+
+/* How Do We Proceed Ends*/
+
+/* How Do We Proceed Ends*/
+
+
+/* Footer Section*/
+
+.footer{
+  margin-left: 12.5%;
+  max-width:85%;
+}
+
+
+.right-col h1{
+  font-size: 26px;
+}
+
+.right-col p{
+  margin-left: 0%;
+}
+
+.border{
+  width: 100px;
+  height: 4px;
+  background: #fc5c65;
+}
+
+.newsletter-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.txtb{
+  flex: 1;
+  padding: 18px 30px;
+  font-size: 16px;
+  color: #293043;
+  background: #bfdae5;
+  border: none;
+  font-weight: 700;
+  outline: none;
+  border-radius: 30px;
+  min-width: 260px;
+}
+
+.btn{
+  padding: 9px 20px;
+  font-size: px;
+  font-weight: 700;
+  outline: none;
+  border-radius: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: opacity .3s linear;
+  background-color: #bfdae5;
+}
+
+.btn:hover{
+  background: #002B5B;
+  color: white;
+}
+
+.page-content{
+  min-height: 100vh;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width:960px) {
+  .footer-container{
+    max-width: 600px;
+  }
+  .right-col{
+    width: 100%;
+    margin-bottom: 60px;
+  }
+
+  .left-col{
+    width: 100%;
+    text-align: center;
+  }
+}

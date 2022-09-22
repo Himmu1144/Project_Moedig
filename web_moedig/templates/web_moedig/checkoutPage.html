@@ -1,0 +1,169 @@
+{% extends 'web_moedig/layout.html' %}
+{% block css %}
+{% load static %}
+{% static 'web_moedig/css/styleForCheckout.css' %}
+{% endblock css %}
+{% block body %}
+{% load static %}
+<!-- Testimonals End -->
+<br>
+<div class=" container-fluid my-5 ">
+  <div class="row justify-content-center ">
+    <div class="col-xl-10">
+      <form class="form-group" method='post' action='/checkout/'>
+        <div class="card shadow-lg" style="background-color: #8ED9F9;"><br>
+          <div class="row jusdjtify-content-around">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <div class="orderInfo col-md-6 pr-4 mr-2 mb-4">
+              {% for product in products %}
+              <div class="upload_name">
+                <a target="__blank" href="{{product.uploaded_file.url}}">{{product.uploaded_file}}</a>
+
+              </div>
+              <div style="width:34vw;">
+                {% for key,value in product.loading_json.items %}
+                <span><b>{{key|capfirst}}</b>: {{value}} &nbsp;</span>
+                {% endfor %}
+              </div>
+              <hr>
+              {% endfor %}
+
+
+              <div class="d-flex justify-content-between">
+                <div>
+                  <strong style="margin-bottom: 2em ;">Total to Pay : {{sum}}</strong>
+                </div>
+              </div>
+
+            </div>
+            <div class="card border-0" style="background-color: #8ED9F9; box-shadow: 5px;">
+              <h3 style="text-align:center"><strong>PICKUP & DELIVERY DETAILS</strong></h3>
+              <hr class="my-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-auto mt-0">
+                    <p><b>1. &nbsp; Your items will be delivered at galgotias University</b></p>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <p><b>{{request.user.email}}</b> </p>
+                </div>
+                {% csrf_token %}
+                <div class="form-group">
+                  {% if not payment %}
+                  <label for="example">2. &nbsp;Prefered Delivery Slot:</label>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <select name="No of Coipes" id="slot" onchange="getselectedslot();">
+                    <option value="10:30AM - 12:30PM">10:30AM - 12:30PM</option>
+                    <option value="12:30PM - 2:30PM">12:30PM - 2:30PM</option>
+                    <option value="2:30PM - 4:30PM">2:30PM - 4:30PM</option>
+                    <option value="8:30Am - 10:30AM">8:30AM - 10:30AM</option>
+                    <input type="hidden" id="hslot" name="hslot" value=''>
+                  </select>
+
+                </div>
+                <div class="form-group">
+                  <div class="md-form md-outline input-with-post-icon datepicker">
+                    <label for="example">3. &nbsp;Prefered Delivery Date:</label>
+                    <input placeholder="Select date" type="date" id="example" name="delivery" class="form-control"
+                      required>
+                  </div>
+                </div>
+                <div class="form-outline mb-2">
+                  <label class="form-label" for="typePhone">4. &nbsp;Enter Mobile No:</label>
+                  <input name="phone" type="tel" placeholder="Enter Your Number" pattern="[1-9]{1}[0-9]{9}"
+                    class="form-control" required />
+                </div>
+                <div class="coupon">
+                  <label for="example">5. &nbsp;Have a coupon? (optional)</label>
+                  <input placeholder="Enter You Coupon Code" type="text" id="example1" name="coupon"
+                    class="form-control">
+                </div>
+                <hr class="my-3">
+                <input type="submit" class="btn" value="Submit">
+                {% endif %}
+                {% if payment %}
+                <div class="text-center">
+                  <button class="btn" id="rzp-button1">Pay</button>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+      </form>
+      <!-- File Show Section -->
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<hr class="my-5">
+
+
+{% endblock body %}
+
+{% block js %}
+<script>
+  var slot = document.getElementById('slot').value;
+  document.getElementById('hslot').value = slot
+  {% comment %} console.log(slot) {% endcomment %}
+
+
+  function getselectedslot() {
+    var slot = document.getElementById('slot').value;
+    document.getElementById('hslot').value = slot
+
+  }
+
+</script>
+
+{% if payment %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+  var options = {
+    "key": "rzp_test_56gkQeVTk4vRak", // Enter the Key ID generated from the Dashboard
+    "amount": {{ payment.amount }}, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+  "currency": "INR",
+    "name": "MOEDIG TECHNOLOGIES",
+      "description": "Test Transaction",
+        "image": "{% static 'web_moedig/images/logo1.png' %}",
+          "order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": "{{callback_url}}",
+              "handler": function (response) {
+                alert(response.razorpay_payment_id);
+                alert(response.razorpay_order_id);
+                alert(response.razorpay_signature)
+              },
+  "prefill": {
+    "name": "{{order.user.username}}",
+      "email": "{{order.user.email}}",
+        "contact": "{{order.phone}}"
+  },
+  "notes": {
+    "address": "Razorpay Corporate Office"
+  },
+  "theme": {
+    "color": "#3399cc"
+  }
+    };
+  var rzp1 = new Razorpay(options);
+  rzp1.on('payment.failed', function (response) {
+    alert(response.error.code);
+    alert(response.error.description);
+    alert(response.error.source);
+    alert(response.error.step);
+    alert(response.error.reason);
+    alert(response.error.metadata.order_id);
+    alert(response.error.metadata.payment_id);
+  });
+  document.getElementById('rzp-button1').onclick = function (e) {
+    rzp1.open();
+    e.preventDefault();
+  }
+</script>
+{% endif %}
+
+{% endblock js %}

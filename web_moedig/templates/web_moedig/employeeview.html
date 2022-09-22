@@ -1,0 +1,79 @@
+{% extends 'web_moedig/layout.html' %}
+{% block css %}
+{% endblock css %}
+{% load static %}
+{% static 'web_moedig/css/styleForAdminDashboard.css' %}
+{% block body %}
+{% load static %}
+<br>
+<br>
+<div class="container">
+  {% for product in products %}   
+  {% if forloop.first %}
+  <h4>{{product.order_id.user.first_name}}</h4>
+  <h5>{{product.order_id}}</h5>
+  {% endif %}
+  {% endfor %}
+  {% for product in products %}   
+  
+    <div class="popup">
+        {% comment %} <a class="close" href="#">&times;</a> {% endcomment %}
+  <hr class="my-3">
+        <div class="orderDetailsOnPopup">
+      <!-- Row Loop Start Here -->
+      <li class="row">
+        <div class="contentOnView">
+          {% comment %} <i class="fas fa-file-alt"></i> {% endcomment %}
+          <div class="details">
+            <span class="fileName"><a target="__blank" href="{{product.uploaded_file.url}}">{{product.uploaded_file}}</a></span>
+            
+          </div>
+        </div>
+       
+        {% comment %} <button class="downloadButton"><i class="fa fa-download"></i> Download</button> {% endcomment %}
+         <!-- checkbox  Start-->
+         {% comment %} <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." /> {% endcomment %}
+         <!-- checkbox end-->
+        
+         <div style="width:80vw;">
+          {% for key,value in product.loading_json.items %}
+          <span>{{key|capfirst}} : {{value}} &nbsp;</span>
+          {% endfor %}
+        <p>Delivery Status : {{product.order_id.delivery_status}}</p>
+
+
+    </div>
+    </div>
+    {% endfor %}
+    <div style="float: right;">
+      <strong>Order Status :</strong>
+      <select class="statusUpdate" id="status_update_employee" onchange="get_statuss();">
+        <option value="Order Placed">Order Placed</option>
+        <option value="Order Printed">Order Printed</option>
+        <option value="Order Shipped">Order Shipped</option>
+      </select>
+      <form action="" method='get'>
+      <input type="hidden" id="statss" name="statss" value='Order Placed'>
+      <button class="my-3" type="submit">Update</button>
+    </form>
+</div>
+</div>
+<hr class="my-5">
+{% endblock body %}
+{% block js %}
+
+<script>
+
+  function get_statuss(){
+    var statss = document.getElementById('status_update_employee').value
+    document.getElementById('statss').value = statss;
+    console.log(stats)
+
+  }
+
+ 
+
+</script>
+
+{% endblock js %}
+

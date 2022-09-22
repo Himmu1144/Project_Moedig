@@ -1,0 +1,600 @@
+{% extends 'web_moedig/layout.html' %}
+
+{% block homeActive %}active{% endblock homeActive %}
+
+{% block body %}
+{% load static %}
+<section>
+  <div class="navDownImage">
+    <img src="{% static 'web_moedig/images/headerBackground.png' %}">
+  </div>
+</section>
+<section>
+
+  <!-- File Upload Section -->
+  <div style="font-family: 'Roboto', sans-serif;" class="uploadYourFileHeading"><b>ORDER HERE</b></div>
+  <br>
+  <div>
+    {% comment %} <marquee behavior="alternate"><h3 style="color: maroon;"><b>Your files will be deleted from our servers once we have confirmed delivery of your product</b></h3></marquee> {% endcomment %}
+  </div>
+  <div class="container">
+
+    <form action="/upload/" method='post' id="uploadForm" enctype='multipart/form-data'>
+      {% csrf_token %}
+      <div class="row">
+        <div class="upload-file col-md-4">
+          <input type="file" class="file-input" accept=".pdf" required name="uploadFile" id="uploadFile">
+          <input type="hidden" id="N" value="">
+        </div>
+      </div>
+      <br>
+      <div class="text-center"><b>Select Print Settings & Upload
+        </b></div>
+
+      <div class="row mt-4">
+        <div class="file-info col-md-8">
+
+          <select name="copies" id="pcopies" onchange="getselectedcopies();">
+            <option value="1">1 copy</option>
+            <option value="2">2 Copies</option>
+            <option value="3">3 Copies</option>
+            <option value="4">4 Copies</option>
+            <option value="5">5 Copies</option>
+            <option value="6">6 Copies</option>
+            <option value="7">7 Copies</option>
+            <option value="8">8 Copies</option>
+            <option value="9">9 Copies</option>
+            <option value="10">10 Copies</option>
+          </select>
+
+
+          <select id='psize' onchange="getselectedsize();">
+            <option value="A4">A4</option>
+            <option value="A3">A3</option>
+            <option value="letter">letter</option>
+            <option value="Envelope">Envelope</option>
+          </select>
+
+          <select id="ptype" onchange="getselectedtype();">
+            <option value="Pulp Paper">Pulp Paper</option>
+            <option value="Eco Paper">Eco Paper</option>
+          </select>
+
+          <select id="pcolor" onchange="getselectedcolor();">
+            <option value="Black&White">Black & White</option>
+            <option value="Color">Color</option>
+          </select>
+          <select id="pquality" onchange="getselectedquality();">
+            <option value="75gsm">75gsm</option>
+            <option value="80gsm">80gsm</option>
+            <option value="100gsm">100gsm</option>
+            <option value="120gsm">120gsm</option>
+          </select>
+          <select id="pside" onchange="getselectedside();">
+            <option value="Right Side Printing">Right Side Printing</option>
+            <option value="Both Side Printing">Both Side Printing</option>
+          </select>
+          <select id="print_quality" onchange="getselectedprintq();">
+            <option value="300dpi">300 dpi</option>
+            <option value="600dpi">600 dpi</option>
+            <option value="1200dpi">1200 dpi</option>
+          </select>
+          <div class="my-3 d-flex justify-content-between">
+            <span><b>Total Price : <span name="totalprice" id="totalprice"></span>
+                <input type="hidden" name="total_price" id="total_price" value=""></b>
+            </span>
+            <button class="btn" type="submit" name="final_submit">UPLOAD</button>
+          </div>
+        </div>
+        <div class="file-box col-md-4 d-flex justify-content-center">
+          <div id="fname"></div>
+
+        </div>
+      </div>
+      <input type="hidden" name="info_json" id="info_json" value="">
+
+    </form>
+
+    <div class="container">
+      <br>
+      {% if user.is_authenticated and products %}
+      <div class="text-center"><b>Your Cart
+        </b></div>
+      {% for product in products %}
+
+      <hr>
+      <div class="upload_name">
+        <a target='__blank' href="{{product.uploaded_file.url}}">{{product.fname}}</a>
+      </div>
+      <div class="upload_json">
+        {% comment %} {{product.items_json}} {% endcomment %}
+        {% comment %} {{product.loading_json}} {% endcomment %}
+        <div style="width:44vw;">
+          {% for key,value in product.loading_json.items %}
+          <span>{{key|capfirst}} : {{value}} &nbsp;</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% comment %} <div class="upload_price">
+        {{product.price}}
+      </div> {% endcomment %}
+
+      <a type="button" href="/delete/{{product.id}}">Delete</a>
+
+      {% endfor %}
+      <div class="d-flex justify-content-between mt-4">
+        <div>
+          <strong>Total to Pay : {{sum}}</strong>
+        </div>
+        <div>
+          <a class="btn" type="button" href="{% url 'checkout' %}" class="rounded">Submit To Checkout</a>
+        </div>
+      </div>
+
+    </div>
+    {% endif %}
+
+    <!-- Form Settings Ends -->
+
+    <hr class="my-5">
+
+
+</section>
+<!--Reasons Why us-->
+<section>
+  <h1 class="text-center">4 REASONS WHY US</h1>
+  <div class="reasons">
+    <div class="howDoWeWork">
+      <div class="howDoWeProcess">
+        <div class="card">
+          <div class="layer">
+
+          </div>
+          <div class="content">
+            <div class="details">
+              <h2> TIME</h2>
+            </div>
+
+            <img width="100px" src="{% static 'web_moedig/images/hourglass.png' %}" alt="">
+
+
+            <p>To receive printouts, you still have to stand in line at a print shop in this modern era. It's simple to
+              order prints from our website. and the rest will be handled by us.</p>
+
+          </div>
+        </div>
+      </div>
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      <div class="howDoWeProcess">
+        <div class="card">
+          <div class="layer">
+
+          </div>
+          <div class="content">
+            <div class="details">
+              <h2> MONEY</h2>
+            </div>
+
+            <img width="100px" src="{% static 'web_moedig/images/money.png' %}" alt="">
+            <br>
+            <br>
+
+            <p>Do you know how much money you're wasting on printouts? In this case, you'll only be billed for the
+              options you select when printing that you personally find to be the most convenient or appealing. Prices
+              begin at @Rs 1.60/page.</p>
+
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <div class="howDoWeProcess">
+        <div class="card">
+          <div class="layer">
+
+          </div>
+          <div class="content">
+            <div class="details">
+              <h2>QUALITY</h2>
+            </div>
+
+            <img width="100px" src="{% static 'web_moedig/images/quality.png' %}" alt="">
+
+
+            <p>You must have wondered if the quality of this could have been higher, right? Without further ado, please
+              choose your preferred printing options, and we will begin processing your order. We care about your
+              satisfaction.</p>
+
+          </div>
+        </div>
+      </div>
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+
+
+      <div class="howDoWeProcess">
+        <div class="card">
+          <div class="layer">
+
+          </div>
+          <div class="content">
+            <div class="details">
+              <h2>DELIVERY</h2>
+            </div>
+            <br>
+
+
+            <img width="100px" src="{% static 'web_moedig/images/delivery.png' %}" alt="">
+
+            <br>
+            <br>
+            <p>We can print and ship any form of document or file the very following day with no fuss. In My Order, you
+              may view the status of your order.</p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- reasons -->
+
+  </div>
+
+</section>
+
+<!-- How Do We Proceed -->
+<section>
+  <div class="container">
+    <hr class="my-5">
+
+    <h1 class="text-center">HOW DO WE WORK</h1>
+  </div>
+  <div class="howDoWeWork">
+    <div class="howDoWeProcess">
+      <div class="card">
+        <div class="layer">
+
+        </div>
+        <div class="content">
+          <div class="details">
+            <h2> BOOKING</h2>
+          </div>
+
+          <img width="100px" src="{% static 'web_moedig/images/order_1.png' %}" alt="">
+
+
+          <p>Your files are transferred to our printing division after passing via our encrypted (SSL) server at the
+            time of order placement. </p>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="howDoWeProcess">
+      <div class="card">
+        <div class="layer">
+
+        </div>
+        <div class="content">
+          <div class="details">
+            <h2> PRINTING</h2>
+          </div>
+
+          <img width="100px" src="{% static 'web_moedig/images/printing_1.png' %}" alt="">
+
+
+          <p>We check what you've picked and make sure you get it when you order from our printing department.</p>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="howDoWeProcess">
+      <div class="card">
+        <div class="layer">
+
+        </div>
+        <div class="content">
+          <div class="details">
+            <h2> DELIVERY</h2>
+          </div>
+
+          <img width="100px" src="{% static 'web_moedig/images/delivery.png' %}" alt="">
+
+
+          <p>Quality control and safety procedures are performed after printing to ensure the integrity of your product.
+            If everything checks out, we send it off to be picked up or delivered.</p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- How Do We Proceed Ends -->
+  </div>
+</section>
+<!-- How Do We Proceed Ends -->
+
+<!-- Testimonials -->
+<!-- Testimonals End -->
+<hr class="my-5">
+{% endblock body %}
+
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+
+<script>
+  totlaprice();
+  var pages = document.getElementById('N').value;
+
+
+  let inputElement = document.getElementById('uploadFile')
+
+  inputElement.onchange = function (event) {
+
+    var file = event.target.files[0];
+
+    //Step 2: Read the file using file reader
+    var fileReader = new FileReader();
+
+    fileReader.onload = function () {
+
+      //Step 4:turn array buffer into typed array
+      var typedarray = new Uint8Array(this.result);
+
+      //Step 5:pdfjs should be able to read this
+      const loadingTask = pdfjsLib.getDocument(typedarray);
+      loadingTask.promise.then(pdf => {
+
+        pages = pdf.numPages;
+        console.log('the no. of pages are', pdf.numPages)
+        console.log(pages);
+        document.getElementById('fname').innerHTML = document.getElementById('uploadFile').value.split('\\')[2];
+        totlaprice();
+        // The document is loaded here...
+      });
+
+
+
+    };
+    //Step 3:Read the file as ArrayBuffer
+    fileReader.readAsArrayBuffer(file);
+  }
+
+  // document.getElementById('N').value =  pages;
+
+
+  var psize = document.getElementById('psize').value;
+  var size_price = 0.5
+
+  function getselectedsize() {
+    var psize = document.getElementById('psize').value;
+    console.log(psize);
+    if (psize == 'A4') {
+      size_price = 0.5
+      console.log(size_price);
+      console.log(psize);
+    } else if (psize == 'A3') {
+      size_price = 1
+      console.log(size_price);
+    } else if (psize == 'letter') {
+      size_price = 0.8
+      console.log(size_price);
+    } else {
+      size_price = 0.7
+      console.log(size_price);
+    }
+    totlaprice();
+  }
+
+  var ptype = document.getElementById('ptype').value;
+  var type_price = 1.2
+
+  function getselectedtype() {
+    var ptype = document.getElementById('ptype').value;
+    console.log(ptype);
+    if (ptype == 'Pulp Paper') {
+      type_price = 1.2
+      console.log(type_price);
+    } else {
+      type_price = 1
+      console.log(type_price);
+    }
+    totlaprice();
+  }
+
+  var pcolor = document.getElementById('pcolor').value;
+  var color_price = 1.3
+
+  function getselectedcolor() {
+    var pcolor = document.getElementById('pcolor').value;
+    console.log(pcolor);
+    if (pcolor == 'Black&White') {
+      color_price = 1.3
+      console.log(color_price);
+    } else {
+      color_price = 1.4
+      console.log(color_price);
+    }
+    totlaprice();
+  }
+
+  var pquality = document.getElementById('pquality').value;
+  var quality_price = 1
+
+  function getselectedquality() {
+    var pquality = document.getElementById('pquality').value;
+    console.log(pquality);
+    if (pquality == '75gsm') {
+      quality_price = 1
+      console.log(quality_price);
+    } else if (pquality == '80gsm') {
+      quality_price = 1.1
+      console.log(quality_price);
+    } else if (pquality == '100gsm') {
+      quality_price = 1.2
+      console.log(quality_price);
+    } else {
+      quality_price = 1.3
+      console.log(quality_price);
+    }
+    totlaprice();
+  }
+
+
+  var pside = document.getElementById('pside').value;
+  var side_price = 1
+
+  function getselectedside() {
+    var pside = document.getElementById('pside').value;
+    console.log(pside);
+    if (pside == 'Right Side Printing') {
+      side_price = 1
+      console.log(side_price);
+    } else {
+      side_price = 0.8
+      console.log(side_price);
+    }
+    totlaprice();
+  }
+
+  var print_quality = document.getElementById('print_quality').value;
+  var printq_price = 1.5
+
+  function getselectedprintq() {
+    var print_quality = document.getElementById('print_quality').value;
+    console.log(print_quality);
+    if (print_quality == '300dpi') {
+      printq_price = 1.5
+      console.log(printq_price);
+    } else if (print_quality == '600dpi') {
+      printq_price = 2
+      console.log(printq_price);
+    } else {
+      printq_price = 2.5
+      console.log(printq_price);
+    }
+    totlaprice();
+  }
+
+  var pcopies = document.getElementById('pcopies').value;
+  var copies_price = 1
+
+  function getselectedcopies() {
+    var pcopies = document.getElementById('pcopies').value;
+    console.log(pcopies);
+    if (pcopies == '1') {
+      copies_price = 1
+      console.log(copies_price);
+    } else if (pcopies == '2') {
+      copies_price = 2
+      console.log(copies_price);
+    } else if (pcopies == '3') {
+      copies_price = 3
+      console.log(copies_price);
+    } else if (pcopies == '4') {
+      copies_price = 4
+      console.log(copies_price);
+    } else if (pcopies == '5') {
+      copies_price = 5
+      console.log(copies_price);
+    } else if (pcopies == '6') {
+      copies_price = 6
+      console.log(copies_price);
+    } else if (pcopies == '7') {
+      copies_price = 7
+      console.log(copies_price);
+    } else if (pcopies == '8') {
+      copies_price = 8
+      console.log(copies_price);
+    } else if (pcopies == '9') {
+      copies_price = 9
+      console.log(copies_price);
+    } else {
+      copies_price = 10
+      console.log(copies_price);
+    }
+    totlaprice();
+  }
+
+
+  function totlaprice() {
+    // var npages = document.getElementById('N').value;
+    var npages = pages;
+    var TotalPrice = npages * copies_price * size_price * type_price * color_price * quality_price * side_price * printq_price
+    document.getElementById('totalprice').innerHTML = TotalPrice.toFixed(2);
+    document.getElementById('total_price').value = TotalPrice.toFixed(2);
+
+    var pcopies = document.getElementById('pcopies').value;
+    var psize = document.getElementById('psize').value;
+    var ptype = document.getElementById('ptype').value;
+    var pcolor = document.getElementById('pcolor').value;
+    var pquality = document.getElementById('pquality').value;
+    var pside = document.getElementById('pside').value;
+    var print_quality = document.getElementById('print_quality').value;
+    var fname = document.getElementById('uploadFile').value.split('\\')[2];
+
+    infova = { 'File Name': fname, 'no. of pages': npages, 'no. of copies': pcopies, 'size': psize, 'type': ptype, 'color': pcolor, 'quality': pquality, 'side': pside, 'print_quality': print_quality, 'Total_price': TotalPrice.toFixed(2) }
+
+    document.getElementById('info_json').value = JSON.stringify(infova);
+
+    var info_json = document.getElementById('info_json').value;
+    console.log(info_json);
+    console.log(TotalPrice);
+  }
+
+  // var npages = document.getElementById('N').value;
+  var npages = pages
+  var TotalPrice = npages * copies_price * size_price * type_price * color_price * quality_price * side_price * printq_price
+  document.getElementById('totalprice').innerHTML = TotalPrice.toFixed(2);
+  document.getElementById('total_price').value = TotalPrice.toFixed(2);
+
+
+
+
+
+</script>
+
+
+{% endblock js %}

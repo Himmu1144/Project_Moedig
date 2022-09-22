@@ -1,0 +1,179 @@
+
+
+/* Popup*/
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #c5cae9;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  z-index: 999;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+/* Popup*/
+/* Order Page*/
+
+
+.card-stepper {
+z-index: 0
+}
+
+#progressbar-2 {
+color: #455A64;
+}
+
+#progressbar-2 li {
+list-style-type: none;
+font-size: 13px;
+width: 33.33%;
+float: left;
+position: relative;
+z-index: 11;
+}
+
+#progressbar-2 #step1:before {
+content: '\f058';
+font-family: "Font Awesome 5 Free";
+color: #fff;
+width: 37px;
+margin-left: 0px;
+padding-left: 0px;
+}
+
+#progressbar-2 #step2:before {
+content: '\f058';
+font-family: "Font Awesome 5 Free";
+color: #fff;
+width: 37px;
+}
+
+#progressbar-2 #step3:before {
+content: '\f058';
+font-family: "Font Awesome 5 Free";
+color: #fff;
+width: 37px;
+margin-right: 0;
+text-align: center;
+}
+
+#progressbar-2 #step4:before {
+content: '\f058';
+font-family: "Font Awesome 5 Free";
+color: #fff;
+width: 37px;
+margin-right: 0;
+text-align: center;
+}
+
+#progressbar-2 li:before {
+line-height: 37px;
+display: block;
+font-size: 12px;
+background: #c5cae9;
+border-radius: 50%;
+}
+
+#progressbar-2 li:after {
+content: '';
+width: 100%;
+height: 10px;
+background: #c5cae9;
+position: absolute;
+left: 0%;
+right: 0%;
+top: 15px;
+z-index: -1;
+}
+
+#progressbar-2 li:nth-child(1):after {
+left: 1%;
+width: 100%
+}
+
+#progressbar-2 li:nth-child(2):after {
+left: 1%;
+width: 100%;
+}
+
+#progressbar-2 li:nth-child(3):after {
+left: 1%;
+width: 100%;
+background: #c5cae9 !important;
+}
+
+#progressbar-2 li:nth-child(4) {
+left: 0;
+width: 37px;
+}
+
+#progressbar-2 li:nth-child(4):after {
+left: 0;
+width: 0;
+}
+
+#progressbar-2 li.active:before,
+#progressbar-2 li.active:after {
+background: #256D85;
+}
+section div ul li a:hover{
+  background-color: #EC5E26;
+  color: rgb(225, 220, 220);
+  border-radius: 5px;
+  text-decoration: none;
+  color: none;
+  padding: 5px 20px;
+  border: 1px solid transparent;
+  transition: 1s ease;
+}
+
+
+/* Footer Section*/
